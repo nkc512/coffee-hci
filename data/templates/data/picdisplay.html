@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Taste Profile</title>
+</head>
+<body>
+  {% load static %}
+<br>
+{% for tp in BatchPicImage %}
+<br>
+    <div align="center">
+        {{tp.Blend_Batch}} Review
+    </div>
+    <div align="center">
+        {% if tp.Img %}
+            <img src="{{ tp.Img.url }}" alt={{tp.Img.url}} />
+        {% endif %}
+    </div>
+
+</br>
+{% endfor %}
+
+
+</body>
+</html>

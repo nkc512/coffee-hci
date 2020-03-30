@@ -1,0 +1,33 @@
+{% extends 'data/base.html' %}
+{% block title %} Taste Profile Review{% endblock %}
+{% block body %}
+    {style}
+
+
+    {/style}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <br>
+                    <div align="center"><h3>Add a New Review</h3></div>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-row" action="" method="post" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            {% include 'data/form_template.html' %}
+                        <div class="from-group">
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" >Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{%endblock %}

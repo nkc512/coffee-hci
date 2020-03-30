@@ -1,0 +1,51 @@
+{% extends 'product/base.html' %}
+{% block title %}Details of {{ blend.name }}{% endblock %}
+
+{% block body %}
+    <style>
+   img {
+    position:relative;
+    left: 50px;
+    border-radius: 10px
+    }
+    h2 {
+        position: relative;
+        top:50px;
+        left: 50px;
+
+    }
+     h6 {
+        position: relative;
+        top:40px;
+        left: 50px;
+
+    }
+   p {
+        position: relative;
+        top:30px;
+        left: 50px;
+        border: 1px powderblue;
+
+
+    }
+</style>
+
+<div class="container">
+    <div class="col-md-8">
+
+    {% if blend.img %}
+        <img src={{ blend.img.url}}  class='img-responsive' width="410" height="420" />
+    {% endif %}
+    {% if pic.Img %}
+            <a href="/product/tp/{{blend.id }}"><img src={{ pic.Img.url}}  class='img-responsive' width="410" height="420" /></a>
+    {% endif %}
+
+    <h2>Name :{{ blend.name }}</h2>
+    <p>City :{{ blend.city  }}  State :{{ blend.state }}  </p>
+    <p>Altitude :{{ blend.altitude }}</p>
+    <p>Description :{{ blend.description }}</p>
+    <p>Characteristics :{{ blend.characteristics }}</p>
+
+</div>
+</div>
+{% endblock %}
