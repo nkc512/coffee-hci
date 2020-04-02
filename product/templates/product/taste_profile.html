@@ -28,10 +28,10 @@
 </style>
 {% for x in batch %}
     {% for tp in pic %}
-        {% if x == tp.Blend_Batch_id  %}
+        {% if x == tp.blend_batch_id  %}
 
             <img src={{ tp.Img.url}}  class='img-responsive' width="410" height="420" />
-            <p>Batch Id:{{ tp.Blend_Batch}}</p>
+            <p>Batch Id:{{ tp.blend_batch}}</p>
         {% endif %}
     {% endfor %}
 {% endfor %}

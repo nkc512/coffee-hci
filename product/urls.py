@@ -5,7 +5,7 @@ import re
 
 urlpatterns = [
     path('home/', views.simple_view, name='home'),
-    url(r'^tp/(?P<Blend_id>[0-9]+)/', views.tp_view, name='tp'),
+    url(r'^tp/(?P<Blend_id>[0-9]+)/', views.taste_profile_view, name='tasteprofile'),
     url(r'^(?P<Blend_id>[0-9]+)/', views.detail_view, name='detail'),
     url(r'all/', views.all_blend, name='all'),
 ]

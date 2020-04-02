@@ -1,19 +1,20 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
     <title>Taste Profile</title>
 </head>
 <body>
-  {% load static %}
+  
 <br>
-{% for tp in BatchPicImage %}
+{% for taste_profile in BatchPicImage %}
 <br>
     <div align="center">
-        {{tp.Blend_Batch}} Review
+        {{taste_profile.blend_batch}} Review
     </div>
     <div align="center">
-        {% if tp.Img %}
-            <img src="{{ tp.Img.url }}" alt={{tp.Img.url}} />
+        {% if taste_profile.img %}
+            <img src="{{ taste_profile.img.url }}" alt={{taste_profile.img.url}} />
         {% endif %}
     </div>
 

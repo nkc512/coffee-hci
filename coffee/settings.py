@@ -121,13 +121,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-#'C:/Users/Neeraj_Kumar.000/Desktop/DjangoProject/c_sudarshan/coffee_s/coffee/static/'
-'C:/Users/Neeraj_Kumar.000/Desktop/coffee/static/'
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATIC_ROOT =os.path.join(os.path.dirname(BASE_DIR),"static_cdn")
-BASE_ROOT =os.path.join(os.path.dirname(BASE_DIR),"media_cdn")
+STATIC_ROOT =os.path.join(os.path.dirname(BASE_DIR),"static_root")
 MEDIA_URL = '/gallery/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')

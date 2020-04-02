@@ -1,7 +1,14 @@
 {% extends 'product/base.html' %}
+{% load static %}
+
 {% block title %}Details of {{ blend.name }}{% endblock %}
 
 {% block body %}
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design for Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.min.css'%}" rel="stylesheet">
     <style>
    img {
     position:relative;
@@ -22,30 +29,55 @@
     }
    p {
         position: relative;
-        top:30px;
+        top:20px;
         left: 50px;
         border: 1px powderblue;
 
 
     }
+    center{
+        position:relative;
+        top:20px;
+        left:100px;
+    }
 </style>
 
 <div class="container">
     <div class="col-md-8">
-
+    <div class="container-fluid">
+    <div class="card-body card-body-cascade text-center">
+    <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4">
     {% if blend.img %}
-        <img src={{ blend.img.url}}  class='img-responsive' width="410" height="420" />
+        <img src={{ blend.img.url}}  class='img-responsive' width="420" height="410" />
     {% endif %}
+    </div>
+    <div class="col-lg-4 col-md-6 mb-4">
     {% if pic.Img %}
-            <a href="/product/tp/{{blend.id }}"><img src={{ pic.Img.url}}  class='img-responsive' width="410" height="420" /></a>
+            <a href="/product/tp/{{blend.id }}"><img src={{ pic.Img.url}}  class='img-responsive' width="420" height="410" /></a>
     {% endif %}
+    </div>
+    </div>
+    </div>
+    </div>
 
     <h2>Name :{{ blend.name }}</h2>
+    <br>
+    <p></p>
     <p>City :{{ blend.city  }}  State :{{ blend.state }}  </p>
     <p>Altitude :{{ blend.altitude }}</p>
     <p>Description :{{ blend.description }}</p>
     <p>Characteristics :{{ blend.characteristics }}</p>
+    <p>Price: {{ blend.price }} </p>
+    <div class="w3-right"><button id="Addtocart" name="Add to cart" class="w3-button w3-center">Add to cart</button></div>
 
 </div>
 </div>
+  <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static '/js/popper.min.js'%}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/bootstrap.min.js'%}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/mdb.min.js' %}"></script>
 {% endblock %}

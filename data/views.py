@@ -1,14 +1,16 @@
-
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch
+from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch,Blend,Item
+from django.views.generic import ListView, DetailView
 
 import pandas as pd
 from math import pi
 import matplotlib.pyplot as plt
 from django.db.models import Avg
 
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
+from .models import Order,OrderItem,Item
 def pltfun(i,values,N,categories):
     angles = [n / float(N) * 2 * pi for n in range(N)]
     angles += angles[:1]
@@ -26,18 +28,19 @@ def pltfun(i,values,N,categories):
     pth = str("media/gallery/" + pth + ".png")
     plt.savefig(pth)
     t = TasteProfile()
-    if TasteProfile.objects.filter(Blend_Batch_id=i).exists():
-        t = TasteProfile.objects.get(Blend_Batch_id=i)
-    t.Blend_Batch_id = i
+    if TasteProfile.objects.filter(blend_batch_id=i).exists():
+        t = TasteProfile.objects.get(blend_batch_id=i)
+    t.blend_batch_id = i
     t.Img = pthimg
     t.save()
+    plt.close()
 
 
 def fun():
     df = pd.DataFrame(list(Profile.objects.all().values()))
     print(df)
-    s=list(df['Blend_Batch_id'])
-    df=df.drop(columns=['Blend_Batch_id','id'])
+    s=list(df['blend_batch_id'])
+    df=df.drop(columns=['blend_batch_id','id'])
     print(df)
     a = df[:2]
     categories = list(a)[:10]
@@ -66,39 +69,77 @@ def index(request):
 def ag():
     p = Batch.objects.values_list('id',flat=True)
     s = Profile()
-    f = ['Acidic','Sweet','Salty', 'Floral', 'Chocolaty', 'Nutty','Bitter','Savoury', 'Spicy', 'Berries']
+    f = ['acidic','sweet','salty', 'floral', 'chocolaty', 'nutty','bitter','savoury', 'spicy', 'berries']
     for a in p:
         x = []
         for i in f:
 
             #x.append(Profile_Review.objects.filter(blend_Batch_Id=a).aggregate(Avg(i)))
-            l=Profile_Review.objects.filter(blend_Batch_Id=a).aggregate(Avg(i))
+            l=Profile_Review.objects.filter(blend_batch_id=a).aggregate(Avg(i))
             g=str(i+'__avg')
             x.append(l[g])
 
-        if Profile.objects.filter(Blend_Batch_id=a).exists():
-            s = Profile.objects.get(Blend_Batch_id=a)
-        s.Blend_Batch_id = a
-        s.Acidic = x[0]
-        s.Berries = x[1]
-        s.Bitter = x[2]
-        s.Chocolaty = x[3]
-        s.Floral = x[4]
-        s.Nutty = x[5]
-        s.Salty = x[6]
-        s.Savoury = x[7]
-        s.Spicy = x[8]
-        s.Sweet = x[9]
+        if Profile.objects.filter(blend_batch_id=a).exists():
+            s = Profile.objects.get(blend_batch_id=a)
+        s.blend_batch_id = a
+        s.acidic = x[0]
+        s.berries = x[1]
+        s.bitter = x[2]
+        s.chocolaty = x[3]
+        s.floral = x[4]
+        s.nutty = x[5]
+        s.salty = x[6]
+        s.savoury = x[7]
+        s.spicy = x[8]
+        s.sweet = x[9]
 
         s.save()
 
+def item_list(request):
+    context = {
+        'items' : Item.objects.all()
+    }
+    return render(request, "item_list.html",context)
+
 class P_ReviewCreate(CreateView):
     model = Profile_Review
-    fields = ['blend_Batch_Id','User_Id','Acidic','Sweet','Salty', 'Floral',
-              'Chocolaty', 'Nutty','Bitter','Savoury', 'Spicy', 'Berries']
+    fields = ['blend_batch_id','user_id','acidic','sweet','salty', 'floral',
+              'chocolaty', 'nutty','bitter','savoury', 'spicy', 'berries']
 
 class G_ReviewCreate(CreateView):
     model = Gen_Review
-    fields = ['Estate_Batch', 'review']
+    fields = ['estate_batch', 'review']
+
+def products(request):
+    context = {
+        'items': Item.objects.all()
+    }
+    return render(request,"base.html",context)
+
+def checkout(request):
+    return render(request,"checkout.html")
 
 
+
+
+class HomeView(ListView):
+    model = Item
+    template_name="base.html"
+class ItemDetailView(DetailView):
+    model=Item
+    template_name="/product/detail.html"
+def add_to_cart(request, slug):
+    item=get_object_or_404(Item,slug=slug)
+    order_item = OrderItem.objects.create(item=item)
+    order_qs=Order.objects.Filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order=order_qs[0]
+        if order.items.filter(item__slug=item.slug).exists():
+            order_item.quantity=1
+            order_item.save()
+    else:
+        order=Order.objects.create(user=request.user)
+        order.items.add(order_item)
+    return redirect("core:product",kwargs={
+        'slug':slug
+    })
