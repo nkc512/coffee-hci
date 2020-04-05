@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch,Blend,Item
-from django.views.generic import ListView, DetailView
-
+from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch,Blend,CoffeeOrder
+from django.views.generic import ListView, DetailView, TemplateView
+from django.http import Http404
 import pandas as pd
 from math import pi
 import matplotlib.pyplot as plt
@@ -10,7 +10,7 @@ from django.db.models import Avg
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
-from .models import Order,OrderItem,Item
+#from .models import Order,OrderItem
 def pltfun(i,values,N,categories):
     angles = [n / float(N) * 2 * pi for n in range(N)]
     angles += angles[:1]
@@ -26,6 +26,7 @@ def pltfun(i,values,N,categories):
     pth = str(i)
     pthimg = "gallery/"+pth+".png"
     pth = str("media/gallery/" + pth + ".png")
+    print(pth)
     plt.savefig(pth)
     t = TasteProfile()
     if TasteProfile.objects.filter(blend_batch_id=i).exists():
@@ -97,7 +98,7 @@ def ag():
 
 def item_list(request):
     context = {
-        'items' : Item.objects.all()
+        'items' : Blend.objects.all()
     }
     return render(request, "item_list.html",context)
 
@@ -112,25 +113,28 @@ class G_ReviewCreate(CreateView):
 
 def products(request):
     context = {
-        'items': Item.objects.all()
+        'items': Blend.objects.all()
     }
-    return render(request,"base.html",context)
+    return render(request,"data/blend_list.html",context)
 
 def checkout(request):
-    return render(request,"checkout.html")
+    return render(request,"data/checkout.html")
 
 
 
 
-class HomeView(ListView):
-    model = Item
-    template_name="base.html"
-class ItemDetailView(DetailView):
-    model=Item
-    template_name="/product/detail.html"
-def add_to_cart(request, slug):
-    item=get_object_or_404(Item,slug=slug)
+class BlendListView(ListView):
+    model = Blend
+    template_name="data/blend_list.html"
+class BlendDetailView(DetailView):
+    model=Blend
+    template_name="data/blend_detail.html"
+
+'''
+def add_to_cart(request, pk):
+    item=get_object_or_404(Blend,pk=pk)
     order_item = OrderItem.objects.create(item=item)
+    print('add to cart called-----------------------------------------------')
     order_qs=Order.objects.Filter(user=request.user, ordered=False)
     if order_qs.exists():
         order=order_qs[0]
@@ -140,6 +144,79 @@ def add_to_cart(request, slug):
     else:
         order=Order.objects.create(user=request.user)
         order.items.add(order_item)
-    return redirect("core:product",kwargs={
-        'slug':slug
+    return redirect("/data/add_to_cart",kwargs={
+        'pk':item.pk
     })
+'''
+def all_blend(request):
+    obj = Blend.objects.all()
+    context ={
+        'Objects': obj,
+    }
+    return render(request,"data/all.html",context)
+
+def simple_view(request):
+
+    return render(request,"data/home.html")
+
+def detail_view(request,Blend_id):
+    try:
+        blend = Blend.objects.get(pk=Blend_id)
+        p = list(Batch.objects.filter(blend=Blend_id).values_list('id', flat=True))
+        pic = TasteProfile()
+        for i in p:
+            if TasteProfile.objects.filter(blend_batch_id=i).exists():
+                pic = TasteProfile.objects.get(blend_batch_id=i)
+    except Blend.DoesNotExist:
+       raise Http404("Blend Does not exist")
+    return render(request, "data/blend_detail.html", {'blend': blend, 'pic': pic})
+
+def taste_profile_view(request,Blend_id):
+    try:
+        p = Batch.objects.filter(blend=Blend_id).values_list('id', flat=True)
+        print(p)
+        pic=TasteProfile.objects.all()
+        print(pic)
+    except Blend.DoesNotExist:
+       raise Http404("Taste Profile Does not exist")
+    return render(request, "data/taste_profile.html", {'batch':p,'pic': pic})
+'''
+class HomeView(TemplateView):
+    template_name= 'home.html'
+
+    def get(self, request):
+        blends = Blend.objects.all()
+        return render(request,self.template_name,{'blends':blends})
+'''
+
+
+def add_to_cart(request,Blend_id):
+    print(Blend_id)
+    coffee = Blend.objects.get(pk=Blend_id)
+    try:
+        preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
+        preexisting_order.quantity += 1
+        preexisting_order.save()
+    except CoffeeOrder.DoesNotExist:
+        new_order = CoffeeOrder.objects.create(
+            coffee=coffee,
+            quantity=1
+            )
+        new_order.save()
+    
+    context = {
+        'blendObj': Blend_id
+    }
+    return render(request, "data/add_to_cart.html",context)
+    
+def remove_from_cart(pk):
+    coffee = Blend.objects.get(pk=pk)
+    try:
+        preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
+        if preexisting_order.quantity > 1:
+            preexisting_order.quantity -= 1
+            preexisting_order.save()
+        else:
+            preexisting_order.delete()
+    except CoffeeOrder.DoesNotExist:
+        pass   

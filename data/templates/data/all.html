@@ -1,0 +1,50 @@
+{% extends 'data/base.html' %}
+{% load static %}
+{% block title %}Shop for blends{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="col-md-8">
+
+    </div>
+<style>
+   img {
+    position:relative;
+    left: 50px;
+    border-radius: 10px
+    }
+    h2 {
+        position: relative;
+        left: 50px;
+        top: 20px;
+    }
+   p {
+        position: relative;
+        left: 50px;
+        top: 20px;
+
+    }
+   div{
+       border-style: solid ;
+       border:200px beige;
+       padding:5px;
+   }
+</style>
+
+{% for blend in Objects %}
+<div align="center" >
+<br> <br>
+
+    {% if blend.img %}
+        <a href="/data/{{blend.id }}"> <img src={{ blend.img.url}}  class='img-responsive' width="410" height="420" /></a>
+    {% endif %}
+
+    <h2><a href="/data/{{blend.id }}">Name :{{ blend.name }}</a></h2>
+    <p>Altitude :{{ blend.altitude }}</p>
+    <p>Description :{{ blend.description }}</p>
+    <p>Characteristics :{{ blend.characteristics }}</p>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}

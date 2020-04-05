@@ -1,12 +1,26 @@
+
+<table class="table">
 {% for field in form %}
-<div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <span class="text-danger small">{{ field.error }}</span>
+
+    <tr>
+    <div class="col-sm-10">
+        <div class="form-group">
+            
+            <td>
+                <label class="control_lable col-sm-2">{{ field.label_tag }}</label>
+            </td>
+            <td>
+                {{ field}}
+            </td>
+            <td>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <span class="text-danger small">{{ field.error }}</span>
+                </div>
+            </td>
         </div>
-    <div class="col-sm-10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <label class="control_lable col-sm-2">{{ field.label_tag }}</label>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{ field}}</div>
-<br>
-</div>
+    </div>
+    </tr>
 {% endfor %}
 
+</table>
 

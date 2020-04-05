@@ -1,0 +1,116 @@
+{% extends 'base_h.html' %}
+{% load static %}
+{% block title %} Artisan Coffee India{% endblock %}
+{% block body %}
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <div class="mySlides w3-display-container w3-center">
+
+        <img src="{%static 'data/co1.jpg' %}"  style="width:100%"/>
+
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+      <h3>ASSAM</h3>
+      <p><b>We had the best time at Assam!</b></p>   
+    </div>
+  </div>
+  <div class="mySlides w3-display-container w3-center">
+    <img src="{%static 'product/co2.jpg' %}"  style="width:100%"/>
+
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+      <h3>KERALA</h3>
+      <p><b>The atmosphere in Kerala is always awesome.</b></p>
+    </div>
+  </div>
+  <div class="mySlides w3-display-container w3-center">
+    <img src="{%static 'product/co3.jpg' %}" style="width:100%"/>
+
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+      <h3>Karnataka</h3>
+      <p><b>Thank you, Karnataka - A night we won't forget.</b></p>
+    </div>
+  </div>
+
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="coffee">
+    <h2 class="w3-wide">THE COFFEE</h2>
+    <p class="w3-opacity"><i>We love coffee</i></p>
+    <p class="w3-justify"> WHAT IS ARTISAN COFFEE?
+Possibly the most over-used word in the coffee industry today, creating artisan coffee isn’t as frivolous as it’s made out to be. At The Flying Squirrel, though it may seem a bit of an exaggeration, we literally do know where every bean of our coffee comes from. Almost all our coffee is micro-lot, ‘handcrafted’, and taken through some uniquely creative, natural process to make it taste and smell exactly the way it does.
+We grow some of our beautiful coffee in the midst of citrus, vanilla or spice plantations to give it those subtle nuances in the final cup. We grow some of our coffee in the heavily forested areas of our estates. Some coffee is grown in the shade of banana plantations. Some of our coffee is even grown wild. Some batches of our harvest we process naturally, with the skin and pulp on, drying out in the gorgeous Kodagu (Coorg) sunshine. For other batches we use the method of pulp sun drying - leaving a bit of the fruity pulp on, and then fermenting it for a wee bit before we dry it out in brick yards. And there’s some batches for which we wash the beans off all the pulp and then dry it out naturally giving it a much milder, nuanced final cup.
+For our Clouds In My Coffee variant, we send our beans on a 2 month vacation to coastal Karnataka, where they live by the sea, soaking in all the goodness of moist sea air which gives the beans a very unique and highly sought-after flavour profile.
+</p>
+    <div class="w3-row w3-padding-32">
+    </div>
+  </div>
+
+  <div class="w3-black" id="reviews" >
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+      <h2 class="w3-wide w3-center">See here</h2>
+      <p class="w3-opacity w3-center"><i>Understand the processed data!</i></p><br>
+
+
+
+  <!-- The Contact Section -->
+  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
+    <h2 class="w3-wide w3-center">CONTACT</h2>
+    <p class="w3-opacity w3-center"><i>Want something similar ? Drop a note!</i></p>
+    <div class="w3-row w3-padding-32">
+      <div class="w3-col m6 w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker" style="width:30px"></i> PCMC, IND<br>
+        <i class="fa fa-phone" style="width:30px"></i> Phone: +020 2377525<br>
+        <i class="fa fa-envelope" style="width:30px"> </i> Email: abc@artisan.com<br>
+      </div>
+    </div>
+  </div>
+  
+<!-- End Page Content -->
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">Powered by <a href="" target="_blank">Django</a></p>
+</footer>
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 4000);    
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
+
+{% endblock %}

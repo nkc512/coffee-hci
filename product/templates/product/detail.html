@@ -69,7 +69,7 @@
     <p>Description :{{ blend.description }}</p>
     <p>Characteristics :{{ blend.characteristics }}</p>
     <p>Price: {{ blend.price }} </p>
-    <div class="w3-right"><button id="Addtocart" name="Add to cart" class="w3-button w3-center">Add to cart</button></div>
+    <div class="w3-right"><a href ="{{blend.get_add_to_cart_url}}" class="btn btn-primary btn-md my-0 p">Add to cart<i class ="fas fa-shopping-cart ml-1"</i></a></div>
 
 </div>
 </div>

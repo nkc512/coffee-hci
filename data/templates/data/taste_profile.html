@@ -1,0 +1,42 @@
+{% extends 'data/base.html' %}
+{% load static %}
+{% block title %}Taste profile{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-8">
+
+    </div>
+<style>
+   img {
+       top:20px ;
+    position:relative;
+    left: 50px;
+    border-radius: 10px
+    }
+    h2 {
+        position: relative;
+        left: 50px;
+        top: 30px;
+    }
+   p {
+        position: relative;
+        left: 50px;
+        top: 20px;
+
+    }
+</style>
+{% for x in batch %}
+    {% for tp in pic %}
+        {% if x == tp.blend_batch_id  %}
+
+            <img src={{ tp.img.url}}  class='img-responsive' width="410" height="420" />
+            <p>Batch Id:{{ tp.blend_batch}}</p>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+</div>
+
+{% endblock %}

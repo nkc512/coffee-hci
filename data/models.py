@@ -12,18 +12,24 @@ rating = ((0, '0-No'),
 alphabet = RegexValidator(r'^[A-Za-z]*$','only alphabet')
 
 class Blend(models.Model):
-    name = models.CharField(max_length=200)
-    state = models.CharField(max_length=20, validators=[alphabet])
-    city = models.CharField(max_length=30, validators=[alphabet])
-    altitude = models.IntegerField()
-    description = models.CharField(max_length=700)
-    processing = models.CharField(max_length=200)
-    characteristics = models.CharField(max_length=200)
+    name = models.CharField(max_length=200,default='Attikan Estate')
+    state = models.CharField(max_length=20, validators=[alphabet],default='Kerala')
+    city = models.CharField(max_length=30, validators=[alphabet],default='thiruvananthapuram')
+    altitude = models.IntegerField(default=450)
+    description = models.CharField(max_length=700,default='Bitter')
+    processing = models.CharField(max_length=200,default='fine grained')
+    characteristics = models.CharField(max_length=200,default='Little sweet')
     img = models.ImageField(upload_to='gallery',null=True)
     price=models.FloatField(default=340)
-    slug = models.SlugField()
+    '''slug = models.SlugField()
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse("tp", kwargs={"pk": self.pk})
+    def get_add_to_cart_url(self):
+        return reverse("add_to_cart", kwargs={"pk": self.pk})
+    '''
+
 
 class Batch(models.Model):
     blend = models.ForeignKey(Blend, on_delete=models.CASCADE)
@@ -73,21 +79,16 @@ class Gen_Review(models.Model):
     def get_absolute_url(self):
         return "/data"
 
-class Item(models.Model):
-    title=models.ForeignKey(Blend,on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.title
-    def get_absolute_url(self):
-        return reverse("core:product", kwargs={"slug": self.slug})
-    def get_add_to_cart_url(self):
-        return reverse("core:add-to-cart", kwargs={"slug": self.slug})
-        
+class CoffeeOrder(models.Model):
+    coffee=models.ManyToManyField(Blend)
+    quantity=models.IntegerField(default=0)
 
 
+
+'''
 class OrderItem(models.Model):
-    item=models.ForeignKey(Item,on_delete=models.CASCADE)
-    quantity=models.IntegerField(default=1)
+    item=models.ForeignKey(Blend,on_delete=models.CASCADE)
+    #quantity=models.IntegerField(default=1)
 
     def __str__(self):
         return self.item
@@ -96,44 +97,35 @@ class Order(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     items=models.ManyToManyField(OrderItem)
     startdate=models.DateTimeField(auto_now_add=True)
-    ordered_date=models.DateTimeField()
-    ordered=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 '''
+'''
 class Cart(models.Model):
-    user = models.ForeignKey(Person, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    order_date = models.DateField(null=True)
+    #user = models.ForeignKey(Person, on_delete=models.CASCADE)
     payment_type = models.CharField(max_length=100, null=True)
     payment_id = models.CharField(max_length=100, null=True)
 
-    def __unicode__(self): 
-            return "%s" % (self.user)
 
-    def add_to_cart(self, name):
-        coffee = Blend.objects.get(pk=name)
+    def add_to_cart(self, pk):
+        coffee = Blend.objects.get(pk=pk)
         try:
-            preexisting_order = CoffeeOrder.objects.get(coffee=coffee, cart=self)
+            preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
             preexisting_order.quantity += 1
             preexisting_order.save()
         except CoffeeOrder.DoesNotExist:
             new_order = CoffeeOrder.objects.create(
                 coffee=coffee,
-                cart=self,
                 quantity=1
                 )
             new_order.save()
 
-            def __unicode__(self):
-                return "%s" % (self.book_id)
 
-
-    def remove_from_cart(self, name):
-        coffee = Blend.objects.get(pk=name)
+    def remove_from_cart(self, pk):
+        coffee = Blend.objects.get(pk=pk)
         try:
-            preexisting_order = BookOrder.objects.get(coffee=coffee, cart=self)
+            preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
             if preexisting_order.quantity > 1:
                 preexisting_order.quantity -= 1
                 preexisting_order.save()
