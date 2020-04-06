@@ -1,0 +1,28 @@
+TO INSTALL VS CODE IN UBUNTU
+
+sudo apt install software-properties-common apt-transport-https wget
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+sudo apt install code
+
+
+TO CREATE VIRTUAL ENVIRONMENT
+
+pip3 install virtualenv --user
+virtualenv django
+
+source ./django/bin/activate
+
+
+INSTALLATIONS
+pip3 install django,Pillow,matplotlib,pandas
+
+
+DJANGO COMMANDS
+django-admin startproject hci
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+
+
