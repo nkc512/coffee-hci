@@ -19,7 +19,7 @@ from django.urls import path
 from .views import index
 from django.conf import settings
 from django.conf.urls.static import static
-from product.views import simple_view
+from data.views import simple_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('^data/', include('data.urls')),

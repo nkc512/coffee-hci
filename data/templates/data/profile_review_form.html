@@ -1,33 +1,71 @@
 {% extends 'data/base.html' %}
+{% load static %}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design for Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.min.css'%}" rel="stylesheet">
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
 {% block title %} Taste Profile Review{% endblock %}
 {% block body %}
     {style}
-
+center{
+        position:relative;
+        top:20px;
+    }
 
     {/style}
+  <!--Main layout-->
+  <main class="mt-10 pt-4">
 <div class="container-fluid">
 
     <div class="row">
 
         <div class="col-sm-12 col-md-7">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                <br>
-                    <div align="center"><h3>Add a New Review</h3></div>
+                
+                    <div class="center"><h3>Add a New Review</h3></div>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
                     <form class="form-row" action="" method="post" enctype="multipart/form-data">
                             {%csrf_token%}
                             {% include 'data/form_template.html' %}
-                        <div class="from-group">
+                        <div class="form-group">
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" >Submit</button>
                         </div>
                     </form>
 
-                </div>
-            </div>
+                
+            
         </div>
     </div>
     </div>
+    </main>
+      <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static '/js/popper.min.js'%}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/bootstrap.min.js'%}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/mdb.min.js' %}"></script>
+
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
 {%endblock %}

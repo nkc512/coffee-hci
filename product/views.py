@@ -20,11 +20,11 @@ def all_blend(request):
     context ={
         'Objects': obj,
     }
-    return render(request,"product/all.html",context)
+    return render(request,"data/all.html",context)
 
 def simple_view(request):
 
-    return render(request,"product/Home.html")
+    return render(request,"data/home.html")
 
 def detail_view(request,Blend_id):
     try:

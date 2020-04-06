@@ -40,16 +40,16 @@ class Batch(models.Model):
 
 class Profile(models.Model):
     blend_batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
-    acidic = models.FloatField()
-    sweet = models.FloatField()
-    salty = models.FloatField()
-    floral = models.FloatField()
-    chocolaty = models.FloatField()
-    nutty = models.FloatField()
-    bitter = models.FloatField()
-    savoury = models.FloatField()
-    spicy = models.FloatField()
-    berries = models.FloatField()
+    acidic = models.FloatField(default=0)
+    sweet = models.FloatField(default=0)
+    salty = models.FloatField(default=0)
+    floral = models.FloatField(default=0)
+    chocolaty = models.FloatField(default=0)
+    nutty = models.FloatField(default=0)
+    bitter = models.FloatField(default=0)
+    savoury = models.FloatField(default=0)
+    spicy = models.FloatField(default=0)
+    berries = models.FloatField(default=0)
 
 class TasteProfile(models.Model):
     blend_batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
@@ -79,10 +79,9 @@ class Gen_Review(models.Model):
     def get_absolute_url(self):
         return "/data"
 
-class CoffeeOrder(models.Model):
-    coffee=models.ManyToManyField(Blend)
+class Coffee_Order(models.Model):
+    blend=models.ForeignKey(Blend,on_delete=models.CASCADE)
     quantity=models.IntegerField(default=0)
-
 
 
 '''

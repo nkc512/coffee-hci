@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch,Blend,CoffeeOrder
+from .models import Profile_Review,Gen_Review,TasteProfile,Profile,Batch,Blend,Coffee_Order
 from django.views.generic import ListView, DetailView, TemplateView
 from django.http import Http404
 import pandas as pd
@@ -32,9 +32,9 @@ def pltfun(i,values,N,categories):
     if TasteProfile.objects.filter(blend_batch_id=i).exists():
         t = TasteProfile.objects.get(blend_batch_id=i)
     t.blend_batch_id = i
-    t.Img = pthimg
+    t.img = pthimg
     t.save()
-    plt.close()
+
 
 
 def fun():
@@ -68,21 +68,26 @@ def index(request):
     return render(request, "data/picdisplay.html", context)
 
 def ag():
-    p = Batch.objects.values_list('id',flat=True)
-    s = Profile()
-    f = ['acidic','sweet','salty', 'floral', 'chocolaty', 'nutty','bitter','savoury', 'spicy', 'berries']
-    for a in p:
+    blend_batch_ids = Batch.objects.values_list('id',flat=True)
+    
+    taste = ['acidic','sweet','salty', 'floral', 'chocolaty', 'nutty','bitter','savoury', 'spicy', 'berries']
+    for blend_batch_id in blend_batch_ids:
         x = []
-        for i in f:
+        #if Profile_Review.objects.filter(blend_batch_id=blend_batch_id).exists():
+        
+        for taste_specific in taste:
 
             #x.append(Profile_Review.objects.filter(blend_Batch_Id=a).aggregate(Avg(i)))
-            l=Profile_Review.objects.filter(blend_batch_id=a).aggregate(Avg(i))
-            g=str(i+'__avg')
+            l=Profile_Review.objects.filter(blend_batch_id=blend_batch_id).aggregate(Avg(taste_specific))
+            #print(l)
+            g=str(taste_specific+'__avg')
             x.append(l[g])
-
-        if Profile.objects.filter(blend_batch_id=a).exists():
-            s = Profile.objects.get(blend_batch_id=a)
-        s.blend_batch_id = a
+        
+        print('x',x)
+        s=Profile()
+        if Profile.objects.filter(blend_batch_id=blend_batch_id).exists():
+            s = Profile.objects.get(blend_batch_id=blend_batch_id)
+        s.blend_batch_id = blend_batch_id
         s.acidic = x[0]
         s.berries = x[1]
         s.bitter = x[2]
@@ -93,7 +98,6 @@ def ag():
         s.savoury = x[7]
         s.spicy = x[8]
         s.sweet = x[9]
-
         s.save()
 
 def item_list(request):
@@ -116,9 +120,6 @@ def products(request):
         'items': Blend.objects.all()
     }
     return render(request,"data/blend_list.html",context)
-
-def checkout(request):
-    return render(request,"data/checkout.html")
 
 
 
@@ -180,43 +181,57 @@ def taste_profile_view(request,Blend_id):
     except Blend.DoesNotExist:
        raise Http404("Taste Profile Does not exist")
     return render(request, "data/taste_profile.html", {'batch':p,'pic': pic})
-'''
-class HomeView(TemplateView):
-    template_name= 'home.html'
-
-    def get(self, request):
-        blends = Blend.objects.all()
-        return render(request,self.template_name,{'blends':blends})
-'''
 
 
 def add_to_cart(request,Blend_id):
     print(Blend_id)
-    coffee = Blend.objects.get(pk=Blend_id)
-    try:
-        preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
-        preexisting_order.quantity += 1
-        preexisting_order.save()
-    except CoffeeOrder.DoesNotExist:
-        new_order = CoffeeOrder.objects.create(
-            coffee=coffee,
-            quantity=1
-            )
-        new_order.save()
-    
+    blend = get_object_or_404(Blend,pk=Blend_id)
+    preexisting_order,created = Coffee_Order.objects.get_or_create(blend=blend)
+    print(type(preexisting_order))
+    preexisting_order.quantity = preexisting_order.quantity+1
+    preexisting_order.save()
+    context=create_cart_view()
+    return render(request, "data/blend_cart.html",context)
+
+def create_cart_view():
+    blend_cart=Coffee_Order.objects.all()
+    cartitems=[]
+    totalquantity=0
+    totalcost=0
+    for item in blend_cart:
+        temp = get_object_or_404(Blend,pk=item.blend.id)
+        cost = temp.price
+        itemname = temp.name
+        quantity = item.quantity
+        totalcost+=cost*quantity
+        totalquantity+=quantity
+        cartitems.append({'itemname':itemname,'quantity':quantity,'costeach':cost,'costtotal':cost*quantity})
+
     context = {
-        'blendObj': Blend_id
+        'cart': cartitems,
+        'totalcost': totalcost,
+        'totalquantity':totalquantity
     }
-    return render(request, "data/add_to_cart.html",context)
-    
-def remove_from_cart(pk):
-    coffee = Blend.objects.get(pk=pk)
+    return context
+
+def cart_view(request):
+    context = create_cart_view()
+    return render(request, "data/checkout_page.html",context)
+
+def checkout(request):
+    context=create_cart_view()
+    return render(request, "data/checkout_page.html",context)
+
+
+                           
+def remove_from_cart(request,Blend_id):
+    blend = get_object_or_404(Blend,pk=Blend_id)
     try:
-        preexisting_order = CoffeeOrder.objects.get(coffee=coffee)
+        preexisting_order = Coffee_Order.objects.get(blend=blend)
         if preexisting_order.quantity > 1:
             preexisting_order.quantity -= 1
             preexisting_order.save()
         else:
             preexisting_order.delete()
-    except CoffeeOrder.DoesNotExist:
+    except Coffee_Order.DoesNotExist:
         pass   

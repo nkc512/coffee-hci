@@ -17,7 +17,6 @@
     }
     h2 {
         position: relative;
-        top:50px;
         left: 50px;
 
     }
@@ -29,7 +28,6 @@
     }
    p {
         position: relative;
-        top:20px;
         left: 50px;
         border: 1px powderblue;
 
@@ -44,39 +42,36 @@
 
 <div class="container">
     <div class="col-md-8">
-        <div class="container-fluid">
             <div class="card-body card-body-cascade text-center">
                 <table class="table">
                 <tr>
-                    <div class="col-lg-4 col-md-6 mb-4">
                     <td>
                         {% if blend.img %}
-                            <img src={{ blend.img.url}}  class='img-responsive' width="420" height="410" />
+                            <img src={{ blend.img.url}}  class='img-responsive' width="350" height="350" />
                         {% endif %}
                     </td>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
                     <td>    {% if pic.img %}
-                            <a href="/data/tp/{{blend.id }}"><img src={{ pic.img.url}}  class='img-responsive' width="420" height="410" /></a>
+                            <a href="/data/tp/{{blend.id }}"><img src={{ pic.img.url}}  class='img-responsive' width="350" height="350" /></a>
                         {% endif %}
                     </td>
-                    </div>
                 </tr>
                 </table>
             </div>
-        </div>
-
+       
+        <table class="table">
+        <tr><td>
         <h2>Name :{{ blend.name }}</h2>
-        <br>
-        <p></p>
-        <p>City :{{ blend.city  }}  State :{{ blend.state }}  </p>
-        <p>Altitude :{{ blend.altitude }}</p>
+        <p>City :{{ blend.city  }}  State :{{ blend.state }} Altitude :{{ blend.altitude }} </p>
+        
         <p>Description :{{ blend.description }}</p>
         <p>Characteristics :{{ blend.characteristics }}</p>
         <p>Price: {{ blend.price }} </p>
-        <div class="w3-right">
-            <a href ="/data/add_to_cart/{{blend.id}}" class="btn btn-primary btn-md my-0 p">Add to cart</a>
-        </div>
+        </td><td>
+        <a href ="/data/add_to_cart/{{blend.id}}" class="btn btn-primary btn-md my-0 p">Add to cart</a>
+        </td>
+        </tr>
+        </table>            
+        
     </div>
 </div>
   <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>

@@ -1,0 +1,91 @@
+{% extends 'data/base.html' %}
+{% load static %}
+{% block title %} Your cart {% endblock %}
+{% block body %}
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Material Design for Bootstrap -->
+<link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+<!-- Your custom styles (optional) -->
+<link href="{% static 'css/style.min.css'%}" rel="stylesheet">
+<style>
+img {
+position:relative;
+left: 50px;
+border-radius: 10px
+}
+h2 {
+    position: relative;
+    top:50px;
+    left: 50px;
+
+}
+    h6 {
+    position: relative;
+    top:40px;
+    left: 50px;
+
+}
+p {
+    position: relative;
+    top:100px;
+    left: 50px;
+    border: 1px powderblue;
+
+
+}
+center{
+    position:relative;
+    top:20px;
+    left:100px;
+}
+</style>
+<p>
+<div class="container">
+<div class="col-md-8">
+
+    <div class="container-fluid">
+        <div class="card-body card-body-cascade text-center">
+<table class="table table-striped">
+<thead>
+<tr>
+
+<th scope="col">Item Name</th>
+<th scope="col">Quantity</th>
+<th scope="col">Cost</th>
+<th scope="col">Total Cost for item</th>
+</tr>
+</thead>
+
+{% for item in cart %}
+<tr>
+<td>    {{item.itemname}}</td>
+<td>    {{item.quantity}}</td>
+<td>    {{item.costeach}}</td>
+<td>    {{item.costtotal}}</td>
+</tr>
+{% endfor %}
+<tr>
+<td>Total</td>
+<td>{{totalquantity}}</td>
+<td></td>
+<td>{{totalcost}}</td>
+</tr>
+</table>
+<br>
+<div class="center">
+
+<a href="/data/checkout" class="w3-button w3-padding-large w3-hide-small">Checkout</a>
+    
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static '/js/popper.min.js'%}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static '/js/bootstrap.min.js'%}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static '/js/mdb.min.js' %}"></script>
+{% endblock %}
