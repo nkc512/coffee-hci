@@ -20,39 +20,34 @@ body {font-family: "Lato", sans-serif}
 </style>
 {% block title %} Taste Profile Review{% endblock %}
 {% block body %}
-    {style}
+{style}
 center{
         position:relative;
         top:20px;
     }
 
-    {/style}
-  <!--Main layout-->
-  <main class="mt-10 pt-4">
-<div class="container-fluid">
-
-    <div class="row">
-
-        <div class="col-sm-12 col-md-7">
-                
-                    <div class="center"><h3>Add a New Review</h3></div>
-                    {% if error_message %}
-                        <p><strong>{{ error_message }}</strong></p>
-                    {% endif %}
-                    <form class="form-row" action="" method="post" enctype="multipart/form-data">
-                            {%csrf_token%}
-                            {% include 'data/form_template.html' %}
-                        <div class="form-group">
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" >Submit</button>
-                        </div>
-                    </form>
-
-                
-            
+{/style}
+<!--Main layout-->
+<main class="mt-10 pt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="center"><h3>Add a New Review</h3>
+                </div>
+                {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+                <form class="form-row" action="" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {% include 'data/form_template.html' %}
+                    <div class="form-group">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" >Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    </div>
-    </main>
+</main>
       <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>

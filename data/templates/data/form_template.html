@@ -13,34 +13,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <div class="container col-md-8 mb-4 card ">
-
-            <!--Card content-->
-            <form class="card-body">
-
-<table class="table">
-            <td>
-                    
-            </td>
-{% for field in form %}
-
-    <tr>
-
-
-            
-            <td>
-                <label >{{ field.label_tag }}</label>
-            </td>
-            <td>
-                {{ field}}
-                <span class="text-danger small">{{ field.error }}</span>
-            </td>
-
-
-    </tr>
-{% endfor %}
-
-</table>
-
-</form>
+<div class="container col-md-8 mb-4 card ">
+    <!--Card content-->
+    <form class="card-body">
+        <table class="table">
+            {% for field in form %}
+            <tr>
+                <td><label >{{ field.label_tag }}</label></td>
+                <td>{{ field}}<span class="text-danger small">{{ field.error }}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
 </div>
