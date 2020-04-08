@@ -77,7 +77,7 @@ class Gen_Review(models.Model):
     review = models.TextField()
 
     def get_absolute_url(self):
-        return "/data"
+        return "/data/comments"
 
 class Coffee_Order(models.Model):
     blend=models.ForeignKey(Blend,on_delete=models.CASCADE)

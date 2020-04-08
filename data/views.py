@@ -67,6 +67,15 @@ def index(request):
     }
     return render(request, "data/picdisplay.html", context)
 
+def comments(request):
+    obj = Gen_Review.objects.all()
+
+    context = {
+        'reviews': obj,
+    }
+    return render(request, "data/reviewdisplay.html", context)
+
+
 def ag():
     blend_batch_ids = Batch.objects.values_list('id',flat=True)
     
@@ -113,7 +122,7 @@ class P_ReviewCreate(CreateView):
 
 class G_ReviewCreate(CreateView):
     model = Gen_Review
-    fields = ['estate_batch', 'review']
+    fields = ['blend_batch', 'review']
 
 def products(request):
     context = {
@@ -217,6 +226,9 @@ def create_cart_view():
 def cart_view(request):
     context = create_cart_view()
     return render(request, "data/checkout_page.html",context)
+
+def login_view(request):
+    return render(request, "data/login.html")
 
 def checkout(request):
     context=create_cart_view()

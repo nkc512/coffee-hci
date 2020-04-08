@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+<title>Checkout </title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -22,15 +23,19 @@ body {font-family: "Lato", sans-serif}
  
 <body>
   <!-- Navbar -->
+<div class="w3-top">
   <div class="w3-bar w3-black w3-card">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
     <a href="/data/all" class="w3-bar-item w3-button w3-padding-large w3-hide-small">COFFEE</a>
     <a href="/data/add/p/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">REVIEWS</a>
+    <a href="/data/add/g/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">COMMENTS</a>
     <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
-    <a href="/data/cart" class="w3-padding-large w3-hover-red w3-hide-small w3-right">CART</a>
-  </div>
+    <a href="/data/cart" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">CART</a>
+    <a href="/data/login" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">LOGIN</a>
 
+  </div>
+</div>
   <!-- Navbar -->
 
   <!--Main layout-->
@@ -49,60 +54,12 @@ body {font-family: "Lato", sans-serif}
             <!--Card content-->
             <form class="card-body">
 
-              <!--Grid row-->
-              <div class="row">
 
-                <!--Grid column-->
-                <div class="col-md-6 mb-2">
-
-                  <!--firstName-->
-                  <div class="md-form ">
-                    <input type="text" id="firstName" class="form-control">
-                    <label for="firstName" class="">First name</label>
-                  </div>
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-6 mb-2">
-
-                  <!--lastName-->
-                  <div class="md-form">
-                    <input type="text" id="lastName" class="form-control">
-                    <label for="lastName" class="">Last name</label>
-                  </div>
-
-                </div>
-                <!--Grid column-->
-
-              </div>
-              <!--Grid row-->
-
-              <!--Username-->
-              <div class="md-form input-group pl-0 mb-5">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">@</span>
-                </div>
-                <input type="text" class="form-control py-0" placeholder="Username" aria-describedby="basic-addon1">
-              </div>
-
-              <!--email-->
-              <div class="md-form mb-5">
-                <input type="text" id="email" class="form-control" placeholder="youremail@example.com">
-                <label for="email" class="">Email (optional)</label>
-              </div>
 
               <!--address-->
               <div class="md-form mb-5">
-                <input type="text" id="address" class="form-control" placeholder="1234 Main St">
+                <input type="text" id="address" class="form-control" placeholder="PCCOE Boys Hostel">
                 <label for="address" class="">Address</label>
-              </div>
-
-              <!--address-2-->
-              <div class="md-form mb-5">
-                <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite">
-                <label for="address-2" class="">Address 2 (optional)</label>
               </div>
 
               <!--Grid row-->
@@ -153,33 +110,7 @@ body {font-family: "Lato", sans-serif}
               </div>
               <!--Grid row-->
 
-              <hr>
 
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="same-address">
-                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
-                <label class="custom-control-label" for="save-info">Save this information for next time</label>
-              </div>
-
-              <hr>
-
-              <div class="d-block my-3">
-                <div class="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                  <label class="custom-control-label" for="credit">Credit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="debit">Debit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="paypal">Paypal</label>
-                </div>
-              </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="cc-name">Name on card</label>

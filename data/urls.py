@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'all/', views.all_blend, name='all'),
     url(r'cart/', views.cart_view, name='blend_cart'),
     url(r'checkout/', views.checkout, name='checkout_page'),
+    url(r'login/', views.login_view, name='login_page'),
+    url(r'comments/', views.comments, name='comments'),
     
 ]

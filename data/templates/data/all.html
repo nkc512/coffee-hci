@@ -1,12 +1,26 @@
-{% extends 'data/base.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block title %}Shop for blends{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Shop for blends </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design for Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.min.css'%}" rel="stylesheet">
 
-{% block body %}
-<div class="container">
-    <div class="col-md-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    </div>
 <style>
    img {
     position:relative;
@@ -31,20 +45,65 @@
    }
 </style>
 
-{% for blend in Objects %}
-<div align="center" >
-<br> <br>
+</head>
+<body>
+  <!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="/data/all" class="w3-bar-item w3-button w3-padding-large w3-hide-small">COFFEE</a>
+    <a href="/data/add/p/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">REVIEWS</a>
+    <a href="/data/add/g/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">COMMENTS</a>
+    <a href="/#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+    <a href="/data/cart" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">CART</a>
+    <a href="/data/login" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">LOGIN</a>
 
-    {% if blend.img %}
+  </div>
+</div>
+<!--Main layout-->
+<br><br>
+<table class="table">
+
+{% for blend in Objects %}
+
+<tr>
+<td>    {% if blend.img %}
         <a href="/data/{{blend.id }}"> <img src={{ blend.img.url}}  class='img-responsive' width="410" height="420" /></a>
     {% endif %}
-
+</td>
+<td>
     <h2><a href="/data/{{blend.id }}">Name :{{ blend.name }}</a></h2>
     <p>Altitude :{{ blend.altitude }}</p>
     <p>Description :{{ blend.description }}</p>
     <p>Characteristics :{{ blend.characteristics }}</p>
-</div>
+</td>
+</tr>
 {% endfor %}
-
+</table>
 </div>
-{% endblock %}
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <hr class="my-4">
+
+
+  </footer>
+  <!--/.Footer-->
+</body>
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static '/js/popper.min.js'%}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/bootstrap.min.js'%}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static '/js/mdb.min.js' %}"></script>
+
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
+</html>
