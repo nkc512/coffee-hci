@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'checkout/', views.checkout, name='checkout_page'),
     url(r'login/', views.login_view, name='login_page'),
     url(r'comments/', views.comments, name='comments'),
+    url(r'register/', views.register_view, name='register'),
+    
     
 ]

@@ -7,9 +7,14 @@ import pandas as pd
 from math import pi
 import matplotlib.pyplot as plt
 from django.db.models import Avg
-
+from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 #from .models import Order,OrderItem
 def pltfun(i,values,N,categories):
     angles = [n / float(N) * 2 * pi for n in range(N)]
@@ -227,8 +232,11 @@ def cart_view(request):
     context = create_cart_view()
     return render(request, "data/checkout_page.html",context)
 
-def login_view(request):
-    return render(request, "data/login.html")
+'''def login_view(request):
+    return render(request, "data/login.html")'''
+
+'''def register_view(request):
+    return render(request, "data/register.html")'''
 
 def checkout(request):
     context=create_cart_view()
@@ -247,3 +255,46 @@ def remove_from_cart(request,Blend_id):
             preexisting_order.delete()
     except Coffee_Order.DoesNotExist:
         pass   
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('/'))
+
+def register_view(request):
+    print('reach 1------------------------------------------')
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        print('reach 2------------------------------------------')
+        if user_form.is_valid():
+            print('reach 3 -----------------------')
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            registered = True
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+    return render(request,'data/register.html',
+                          {'user_form':user_form,
+                           'registered':registered})
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return HttpResponse("Invalid login details given")
+    else:
+        return render(request, 'data/login.html', {})

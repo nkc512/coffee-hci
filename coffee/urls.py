@@ -20,11 +20,14 @@ from .views import index
 from django.conf import settings
 from django.conf.urls.static import static
 from data.views import simple_view
+from data.views import user_logout
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('^data/', include('data.urls')),
     url(r'^product/', include('product.urls')),
     path('',simple_view, name='index'),
+    url(r'^logout/$', user_logout, name='logout'),
 
 ]
 if settings.DEBUG:

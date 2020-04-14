@@ -83,6 +83,8 @@ class Coffee_Order(models.Model):
     blend=models.ForeignKey(Blend,on_delete=models.CASCADE)
     quantity=models.IntegerField(default=0)
 
+'''class Person(models.Model):
+    name'''
 
 '''
 class OrderItem(models.Model):

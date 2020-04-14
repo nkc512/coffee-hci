@@ -57,13 +57,13 @@ body {font-family: "Lato", sans-serif}
                 <form class="form-row" action="" method="post" enctype="multipart/form-data">
                     {%csrf_token%}
                     <table class="table">
-            {% for field in form %}
-            <tr>
-                <td><label >{{ field.label_tag }}</label></td>
-                <td>{{ field}}<span class="text-danger small">{{ field.error }}</span></td>
-            </tr>
-            {% endfor %}
-        </table>
+                        {% for field in form %}
+                        <tr>
+                            <td><label >{{ field.label_tag }}</label></td>
+                            <td>{{ field}}<span class="text-danger small">{{ field.error }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                     <div class="form-group">
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" >Submit</button>
                     </div>
